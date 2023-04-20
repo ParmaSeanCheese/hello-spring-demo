@@ -38,13 +38,36 @@ public class HelloController {
     public String helloForm(){
         return "<html>" +
                 "<body>" +
-                "<form action='hello' method='post'>" + //submit a request to /hello
-                "<input type='text' name='name'>" +
-                "<input type='submit' value='Greet me!'>" +
-                "</form>" +
+                    "<form action='/hello/greeting' method='post'>" + //submit a request to /hello
+                        "<input type='text' name='name'>" +
+                        "<select name='language' id='language'>" +
+                            "<option value=''>--Please select Language--</option>" +
+                            "<option value='english'>English</option>" +
+                            "<option value='french'>French</option>" +
+                            "<option value='spanish'>Spanish</option>" +
+                            "<option value='german'>German</option>" +
+                            "<option value='russian'>Russian</option>" +
+                        "</select>" +
+                        "<input type='submit' value='Greet me!'>" +
+                    "</form>" +
                 "</body>" +
                 "</html>";
     }
 
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "greeting")
+    public String createMessage(@RequestParam String name, @RequestParam String language){
+        if (language.equals("")){
+            return "Please Select a language";
+        } else if (language.equals("english")) {
+            return "Hello, " + name + "!";
+        } else if (language.equals("french")) {
+            return "Bonjour, " + name + "!";
+        } else if (language.equals("spanish")) {
+            return "¡Buenos días, " + name + "!";
+        } else if (language.equals("german")) {
+            return "Guten Tag, " + name + "!";
+        }
+        return "Привет, " + name + "!";
+    }
 
 }
